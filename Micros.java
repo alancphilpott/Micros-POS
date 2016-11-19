@@ -39,9 +39,10 @@ public class Micros extends JFrame
         cPane.setLayout(null);
 
         // ---------------------------------- Create The Welcome/Instruction Label ----------------------------------
-        areaLabel = new JLabel("Welcome");
+        areaLabel = new JLabel("Welcome!");
         areaLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-        areaLabel.setLocation(70,5);
+        areaLabel.setForeground(Color.BLUE);
+        areaLabel.setLocation(65,5);
         areaLabel.setSize(200,30);
         cPane.add(areaLabel);
         areaLabel = new JLabel("Choose What You Want");
@@ -62,18 +63,21 @@ public class Micros extends JFrame
         menuButton = new JButton(foodItem.getFoodItemOne() + " " + euro + foodItem.getItemOnePrice());
         menuButton.setLocation(10,90);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
         menuButton = new JButton(foodItem.getFoodItemTwo() + " " + euro + foodItem.getItemTwoPrice());
         menuButton.setLocation(10, 130);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
         menuButton = new JButton(foodItem.getFoodItemThree() + " " + euro + foodItem.getItemThreePrice());
         menuButton.setLocation(10,170);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
 
         // ---------------------------------- Create The Drinks Label ----------------------------------
-        areaLabel = new JLabel("Food Items");
+        areaLabel = new JLabel("Drink Items");
         areaLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         areaLabel.setForeground(Color.GRAY);
         areaLabel.setLocation(10,210);
@@ -84,6 +88,7 @@ public class Micros extends JFrame
         menuButton = new JButton(drinkItem.getDrinkItemOne() + " " + euro + drinkItem.getItemOnePrice());
         menuButton.setLocation(10,250);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
         menuButton = new JButton(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice());
         menuButton.setLocation(10, 290);
@@ -101,7 +106,7 @@ public class Micros extends JFrame
 
         // Create Items To Add To 'View' Menu
         menuItem = new JMenuItem("View Bill"); // New Menu Item Called View
-        menuItem.addActionListener(e -> JOptionPane.showMessageDialog(null,"You Choose To: View Bill")); // Action Listener For When 'View Bill' Is Clicked
+        menuItem.addActionListener(new actionListener()); // Action Listener For When 'View Bill' Is Clicked
         billMenu.add(menuItem); // Add 'View Bill' To The Bill Menu
 
         menuItem = new JMenuItem("Pay Bill");
@@ -128,23 +133,64 @@ public class Micros extends JFrame
     {
         public void actionPerformed(ActionEvent a)
         {
+            // --------------------------- View Bill Option ---------------------------
+            if(a.getActionCommand().equals("View Bill"))
+            {
+                JOptionPane.showMessageDialog(null,userBill.getBillList());
+            }
+
             // --------------------------- Pay Bill Option ---------------------------
             if(a.getActionCommand().equals("Pay Bill"))
             {
-                JOptionPane.showMessageDialog(null, "Your Bill Total Is: " + userBill.getBillTotal());
+                JOptionPane.showMessageDialog(null, "Your Bill Total Is: " + euro + userBill.getBillTotal());
             }
 
+            // --------------------------- Food Item Number One ---------------------------
+            if(a.getActionCommand().equals(foodItem.getFoodItemOne() + " " + euro + foodItem.getItemOnePrice()))
+            {
+                userBill.setBillList(foodItem.getFoodItemOne());
+                userBill.setItemChoosePrice(foodItem.getItemOnePrice());
+                JOptionPane.showMessageDialog(null, foodItem.getFoodItemOne() + " Added To Bill");
+            }
+
+            // --------------------------- Food Item Number Two ---------------------------
+            if(a.getActionCommand().equals(foodItem.getFoodItemTwo() + " " + euro + foodItem.getItemTwoPrice()))
+            {
+                userBill.setBillList(foodItem.getFoodItemTwo());
+                userBill.setItemChoosePrice(foodItem.getItemTwoPrice());
+                JOptionPane.showMessageDialog(null, foodItem.getFoodItemTwo() + " Added To Bill");
+            }
+
+            // --------------------------- Food Item Number Three ---------------------------
+            if(a.getActionCommand().equals(foodItem.getFoodItemThree() + " " + euro + foodItem.getItemThreePrice()))
+            {
+                userBill.setBillList(foodItem.getFoodItemThree());
+                userBill.setItemChoosePrice(foodItem.getItemThreePrice());
+                JOptionPane.showMessageDialog(null, foodItem.getFoodItemThree() + " Added To Bill");
+            }
+
+            // --------------------------- Drink Item Number One ---------------------------
+            if(a.getActionCommand().equals(drinkItem.getDrinkItemOne() + " " + euro + drinkItem.getItemOnePrice()))
+            {
+                userBill.setBillList(drinkItem.getDrinkItemOne());
+                userBill.setItemChoosePrice(drinkItem.getItemOnePrice());
+                JOptionPane.showMessageDialog(null, drinkItem.getDrinkItemOne() + " Added To Bill");
+            }
+
+            // --------------------------- Drink Item Number Two ---------------------------
             if(a.getActionCommand().equals(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice()))
             {
+                userBill.setBillList(drinkItem.getDrinkItemTwo());
                 userBill.setItemChoosePrice(drinkItem.getItemTwoPrice());
-                JOptionPane.showMessageDialog(null,"Jacobs Coffee Added To Bill");
+                JOptionPane.showMessageDialog(null, drinkItem.getDrinkItemTwo() + " Added To Bill");
             }
 
             // --------------------------- Drink Item Number Three ---------------------------
             if(a.getActionCommand().equals(drinkItem.getDrinkItemThree() + " " + euro + drinkItem.getItemThreePrice()))
             {
+                userBill.setBillList(drinkItem.getDrinkItemThree());
                 userBill.setItemChoosePrice(drinkItem.getItemThreePrice());
-                JOptionPane.showMessageDialog(null,"Hot Chocolate Added To Bill");
+                JOptionPane.showMessageDialog(null, drinkItem.getDrinkItemThree() + " Added To Bill");
             }
         }
     }
