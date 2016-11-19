@@ -28,7 +28,7 @@ public class Micros extends JFrame
     {
         // Set The JFrame Properties ------------------------------------------------------------------
         super("Micros System");
-        setSize(230,600);
+        setSize(230,430);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocation(50,50);
@@ -47,15 +47,15 @@ public class Micros extends JFrame
         // ---------------------------------- Create The Food Buttons ----------------------------------
         menuButton = new JButton(foodItem.getFoodItemOne() + " " + euro + foodItem.getItemOnePrice());
         menuButton.setLocation(10,50);
-        menuButton.setSize(200,20);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
         menuButton = new JButton(foodItem.getFoodItemTwo() + " " + euro + foodItem.getItemTwoPrice());
-        menuButton.setLocation(10, 80);
-        menuButton.setSize(200,20);
+        menuButton.setLocation(10, 90);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
         menuButton = new JButton(foodItem.getFoodItemThree() + " " + euro + foodItem.getItemThreePrice());
-        menuButton.setLocation(10,110);
-        menuButton.setSize(200,20);
+        menuButton.setLocation(10,130);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
 
         // ---------------------------------- Create The Drinks Label ----------------------------------
@@ -68,15 +68,15 @@ public class Micros extends JFrame
         // ---------------------------------- Create The Drink Buttons ----------------------------------
         menuButton = new JButton(drinkItem.getDrinkItemOne() + " " + euro + drinkItem.getItemOnePrice());
         menuButton.setLocation(10,250);
-        menuButton.setSize(200,20);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
         menuButton = new JButton(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice());
-        menuButton.setLocation(10, 280);
-        menuButton.setSize(200,20);
+        menuButton.setLocation(10, 290);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
         menuButton = new JButton(drinkItem.getDrinkItemThree() + " " + euro + drinkItem.getItemThreePrice());
-        menuButton.setLocation(10,310);
-        menuButton.setSize(200,20);
+        menuButton.setLocation(10,330);
+        menuButton.setSize(200,30);
         cPane.add(menuButton);
 
         // Create The 'File' Menu To Hold Items
