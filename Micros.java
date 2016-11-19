@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Micros extends JFrame
 {
@@ -21,6 +22,7 @@ public class Micros extends JFrame
     private Food foodItem = new Food();
     private Drinks drinkItem = new Drinks();
     private String euro = "\u20ac";
+    Bill userBill = new Bill();
 
     public Micros ()
     {
@@ -86,10 +88,12 @@ public class Micros extends JFrame
         menuButton = new JButton(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice());
         menuButton.setLocation(10, 290);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
         menuButton = new JButton(drinkItem.getDrinkItemThree() + " " + euro + drinkItem.getItemThreePrice());
         menuButton.setLocation(10,330);
         menuButton.setSize(200,30);
+        menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
 
         // Create The 'View' Menu To Hold Items
@@ -101,7 +105,7 @@ public class Micros extends JFrame
         billMenu.add(menuItem); // Add 'View Bill' To The Bill Menu
 
         menuItem = new JMenuItem("Pay Bill");
-        menuItem.addActionListener(e -> JOptionPane.showMessageDialog(null,"You Choose To: Pay Bill"));
+        menuItem.addActionListener(new actionListener());
         billMenu.add(menuItem);
 
         // Create The 'File' Menu To Hold Items
@@ -118,5 +122,30 @@ public class Micros extends JFrame
 
         // Add The Menu Bar To The Frame
         setJMenuBar(menuBar);
+    }
+
+    public class actionListener extends Bill implements ActionListener
+    {
+        public void actionPerformed(ActionEvent a)
+        {
+            // --------------------------- Pay Bill Option ---------------------------
+            if(a.getActionCommand().equals("Pay Bill"))
+            {
+                JOptionPane.showMessageDialog(null, "Your Bill Total Is: " + userBill.getBillTotal());
+            }
+
+            if(a.getActionCommand().equals(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice()))
+            {
+                userBill.setItemChoosePrice(drinkItem.getItemTwoPrice());
+                JOptionPane.showMessageDialog(null,"Jacobs Coffee Added To Bill");
+            }
+
+            // --------------------------- Drink Item Number Three ---------------------------
+            if(a.getActionCommand().equals(drinkItem.getDrinkItemThree() + " " + euro + drinkItem.getItemThreePrice()))
+            {
+                userBill.setItemChoosePrice(drinkItem.getItemThreePrice());
+                JOptionPane.showMessageDialog(null,"Hot Chocolate Added To Bill");
+            }
+        }
     }
 }
