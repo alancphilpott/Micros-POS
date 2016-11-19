@@ -4,6 +4,8 @@ package Project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Micros extends JFrame
 {
@@ -30,9 +32,38 @@ public class Micros extends JFrame
         cPane.setLayout(new GridBagLayout());
 
         // Create The Menu To Hold Items
+        fileMenu = new JMenu("File");
 
-        
+        //Create Items To Add To File Menu
+        menuItem = new JMenuItem("Exit");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        fileMenu.add(menuItem);
 
+        // Create View Menu
+        viewMenu = new JMenu("Bill");
+
+        // Create Items To Add To View Menu
+
+        menuItem = new JMenuItem("View");
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,"You Choose To: View Bill");
+            }
+        });
+        viewMenu.add(menuItem);
+
+        // Create Menu Bar To Add Menus
+        menuBar = new JMenuBar();
+        menuBar.add(fileMenu); menuBar.add(viewMenu);
+
+        // Add The Menu Bar To The Frame
+        setJMenuBar(menuBar);
     }
 
 }
