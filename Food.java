@@ -1,8 +1,7 @@
 package Project;
 
-/**
- * Created by Alan on 19/11/2016.
- */
+/** Created by Alan on 19/11/2016 */
+
 public class Food {
 
     private String foodItemOne = "Chicken Curry";

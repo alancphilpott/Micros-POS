@@ -2,6 +2,8 @@
 
 package Project;
 
+import sun.text.resources.cldr.rn.FormatData_rn;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,29 +21,30 @@ public class Micros extends JFrame
     private JMenuItem menuItem; // Create The Items For The Menus
     private Container cPane; // Container For All J Items
     private Food foodItem = new Food();
+    private Drinks drinkItem = new Drinks();
     private String euro = "\u20ac";
 
     public Micros ()
     {
-        // Set The JFrame Properties
+        // Set The JFrame Properties ------------------------------------------------------------------
         super("Micros System");
         setSize(230,600);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocation(50,50);
 
-        // Create The Container
+        // ---------------------------------- Create The Container ----------------------------------
         cPane = getContentPane();
         cPane.setLayout(null);
 
-        // Create The Food Label
+        // ---------------------------------- Create The Food Label ----------------------------------
         areaLabel = new JLabel("Food Items");
         areaLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         areaLabel.setLocation(10,10);
         areaLabel.setSize(200,30);
         cPane.add(areaLabel);
 
-        // Create The Food Buttons
+        // ---------------------------------- Create The Food Buttons ----------------------------------
         menuButton = new JButton(foodItem.getFoodItemOne() + " " + euro + foodItem.getItemOnePrice());
         menuButton.setLocation(10,50);
         menuButton.setSize(200,20);
@@ -52,6 +55,27 @@ public class Micros extends JFrame
         cPane.add(menuButton);
         menuButton = new JButton(foodItem.getFoodItemThree() + " " + euro + foodItem.getItemThreePrice());
         menuButton.setLocation(10,110);
+        menuButton.setSize(200,20);
+        cPane.add(menuButton);
+
+        // ---------------------------------- Create The Drinks Label ----------------------------------
+        areaLabel = new JLabel("Food Items");
+        areaLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+        areaLabel.setLocation(10,210);
+        areaLabel.setSize(200,30);
+        cPane.add(areaLabel);
+
+        // ---------------------------------- Create The Drink Buttons ----------------------------------
+        menuButton = new JButton(drinkItem.getDrinkItemOne() + " " + euro + drinkItem.getItemOnePrice());
+        menuButton.setLocation(10,250);
+        menuButton.setSize(200,20);
+        cPane.add(menuButton);
+        menuButton = new JButton(drinkItem.getDrinkItemTwo() + " " + euro + drinkItem.getItemTwoPrice());
+        menuButton.setLocation(10, 280);
+        menuButton.setSize(200,20);
+        cPane.add(menuButton);
+        menuButton = new JButton(drinkItem.getDrinkItemThree() + " " + euro + drinkItem.getItemThreePrice());
+        menuButton.setLocation(10,310);
         menuButton.setSize(200,20);
         cPane.add(menuButton);
 

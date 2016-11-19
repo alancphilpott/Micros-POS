@@ -1,12 +1,11 @@
 package Project;
 
-/**
- * Created by Alan on 19/11/2016.
- */
+/** Created by Alan on 19/11/2016 */
+
 public class Drinks {
 
-    private String drinkItemOne = "Tea";
-    private String drinkItemTwo = "Coffee";
+    private String drinkItemOne = "Lyons Tea";
+    private String drinkItemTwo = "Jacobs Coffee";
     private String drinkItemThree = "Hot Chocolate";
     private double itemOnePrice = 2.00;
     private double itemTwoPrice = 3.00;
