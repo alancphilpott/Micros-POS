@@ -10,6 +10,7 @@ public class Drinks {
     private double itemOnePrice = 2.00;
     private double itemTwoPrice = 3.00;
     private double itemThreePrice = 4.00;
+    private String euro = "\u20ac"; // Euro Character
 
     public String getDrinkItemOne ()
     {
@@ -36,5 +37,12 @@ public class Drinks {
     public double getItemThreePrice ()
     {
         return itemThreePrice;
+    }
+
+    public String toString ()
+    {
+        return drinkItemOne + " " + euro + itemOnePrice + "\n" +
+                drinkItemTwo + " " + euro + itemTwoPrice + "\n" +
+                drinkItemThree + " " + euro + itemThreePrice;
     }
 }
