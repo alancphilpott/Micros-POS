@@ -2,14 +2,14 @@ package Project;
 
 /** Created by Alan on 19/11/2016 */
 
-public class Food {
+public class Drink {
 
     private String name;
     private double price;
 
-    public Food () {}
+    public Drink () {}
 
-    public Food (String name, double price)
+    public Drink (String name, double price)
     {
         this.name = name;
         this.price = price;

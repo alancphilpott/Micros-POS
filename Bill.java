@@ -7,18 +7,14 @@ import java.util.ArrayList;
  */
 public class Bill {
 
-    private double itemChoosePrice;
+    private double item;
     private double billTotal;
     private ArrayList<String> billList = new ArrayList<>();
 
-    public void setItemChoosePrice (double itemChoosePrice)
+    public void setBill (String name, double price)
     {
-        this.billTotal += itemChoosePrice;
-    }
-
-    public void setBillList (String billItem)
-    {
-        billList.add(billItem);
+        billList.add(name);
+        billTotal += price;
     }
 
     public double getBillTotal ()
