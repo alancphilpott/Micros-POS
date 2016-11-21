@@ -1,20 +1,21 @@
 package Project;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * Created by Alan on 19/11/2016.
- */
+/** Created by Alan on 19/11/2016 */
+
 public class Bill {
 
     private double item;
     private double billTotal;
-    private ArrayList<String> billList = new ArrayList<>();
+    private ArrayList<Meal> billList = new ArrayList<>();
 
-    public void setBill (String name, double price)
+    public void setBill (Meal meal)
     {
-        billList.add(name);
-        billTotal += price;
+        billList.add(meal);
+        billTotal += meal.getPrice();
     }
 
     public double getBillTotal ()
@@ -22,8 +23,21 @@ public class Bill {
         return this.billTotal;
     }
 
-    public ArrayList<String> getBillList ()
+    public JTextArea getBillList ()
     {
-        return billList;
+        String billFormat = "";
+        JTextArea billArea = new JTextArea();
+        billArea.setFont(new Font("monospaced", Font.PLAIN, 14));
+        billArea.append(String.format("%-20s %-10s\n\n","Name","Price"));
+
+        for(Meal i : billList) {
+            billFormat += String.format("%-20s €%-10s\n",i.getName(), i.getPrice());
+            billArea.append(billFormat);
+            billFormat = "";
+        }
+
+        billArea.append("\nTotal Price: €" + billTotal);
+        billArea.setEditable(false);
+        return billArea;
     }
 }

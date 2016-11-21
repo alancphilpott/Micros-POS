@@ -1,12 +1,11 @@
-/** Created by Alan on 19/11/2016 */
-
 package Project;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
+/** Created by Alan on 19/11/2016 */
 
 public class Micros extends JFrame {
     // Create Local Variables
@@ -20,14 +19,13 @@ public class Micros extends JFrame {
     private JMenuItem menuItem; // Create The Items For The Menus
     private Container cPane; // Container For All J Items
 
-    // Micros Food and Drinks
-    private Food curry = new Food("Chicken Curry", 10.00);
-    private Food spaghetti = new Food("Spaghetti Bolognese", 15.00);
-    private Food steak = new Food("Steak Sandwich", 20.00);
-
-    private Drink tea = new Drink("Lyons Tea", 2.00);
-    private Drink coffee = new Drink("Bewleys Coffee", 3.00);
-    private Drink hotchocolate = new Drink("Hot Chocolate", 4.00);
+    // Micros Menu
+    private Meal curry = new Meal("Chicken Curry", 10.00);
+    private Meal spaghetti = new Meal("Spaghetti Bolognese", 15.00);
+    private Meal steak = new Meal("Steak Sandwich", 20.00);
+    private Meal tea = new Meal("Lyons Tea", 2.00);
+    private Meal coffee = new Meal("Bewleys Coffee", 3.00);
+    private Meal hotchocolate = new Meal("Hot Chocolate", 4.00);
 
     // New Variable Of Type 'Bill'
     Bill userBill = new Bill();
@@ -151,37 +149,37 @@ public class Micros extends JFrame {
 
             // --------------------------- Food Item Number One ---------------------------
             if (a.getActionCommand().equals(curry.toString())) {
-                userBill.setBill(curry.getName(), curry.getPrice());
+                userBill.setBill(curry);
                 JOptionPane.showMessageDialog(null, curry.getName() + " Added To Bill");
             }
 
             // --------------------------- Food Item Number Two ---------------------------
             if (a.getActionCommand().equals(spaghetti.toString())) {
-                userBill.setBill(spaghetti.getName(), spaghetti.getPrice());
+                userBill.setBill(spaghetti);
                 JOptionPane.showMessageDialog(null, spaghetti.getName() + " Added To Bill");
             }
 
             // --------------------------- Food Item Number Three ---------------------------
             if (a.getActionCommand().equals(steak.toString())) {
-                userBill.setBill(steak.getName(), steak.getPrice());
+                userBill.setBill(steak);
                 JOptionPane.showMessageDialog(null, steak.getName() + " Added To Bill");
             }
 
             // --------------------------- Drink Item Number One ---------------------------
             if (a.getActionCommand().equals(tea.toString())) {
-                userBill.setBill(tea.getName(), tea.getPrice());
+                userBill.setBill(tea);
                 JOptionPane.showMessageDialog(null, tea.getName() + " Added To Bill");
             }
 
             // --------------------------- Drink Item Number Two ---------------------------
             if (a.getActionCommand().equals(coffee.toString())) {
-                userBill.setBill(coffee.getName(), coffee.getPrice());
+                userBill.setBill(coffee);
                 JOptionPane.showMessageDialog(null, coffee.getName() + " Added To Bill");
             }
 
             // --------------------------- Drink Item Number Three ---------------------------
             if (a.getActionCommand().equals(hotchocolate.toString())) {
-                userBill.setBill(hotchocolate.getName(), hotchocolate.getPrice());
+                userBill.setBill(hotchocolate);
                 JOptionPane.showMessageDialog(null, hotchocolate.getName() + " Added To Bill");
             }
         }
