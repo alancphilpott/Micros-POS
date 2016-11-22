@@ -1,5 +1,3 @@
-package Project;
-
 /** Created by Sam on 22/11/2016 */
 
 enum ItemType {
