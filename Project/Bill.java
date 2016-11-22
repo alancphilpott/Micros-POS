@@ -1,21 +1,19 @@
 package Project;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 /** Created by Alan on 19/11/2016 */
 
-public class Bill {
+class Bill {
 
-    private double item;
     private double billTotal;
-    private ArrayList<Meal> billList = new ArrayList<>();
+    private final ArrayList<MenuItem> billList = new ArrayList<>();
 
-    public void setBill (Meal meal)
+    public void setBill (MenuItem menuItem)
     {
-        billList.add(meal);
-        billTotal += meal.getPrice();
+        billList.add(menuItem);
+        billTotal += menuItem.getPrice();
     }
 
     public double getBillTotal ()
@@ -23,20 +21,31 @@ public class Bill {
         return this.billTotal;
     }
 
-    public JTextArea getBillList ()
+    public JTextPane getBillList ()
     {
-        String billFormat = "";
-        JTextArea billArea = new JTextArea();
-        billArea.setFont(new Font("monospaced", Font.PLAIN, 14));
-        billArea.append(String.format("%-20s %-10s\n\n","Name","Price"));
+        String html = "<html> <table style=\"width:100%\">\n" +
+                "  <tr>\n" +
+                "    <th><u>Name</u></th>\n" +
+                "    <th><u>Price</u></th>\n" +
+                "  </tr>\n";
 
-        for(Meal i : billList) {
-            billFormat += String.format("%-20s €%-10s\n",i.getName(), i.getPrice());
-            billArea.append(billFormat);
-            billFormat = "";
-        }
+        for(MenuItem i : billList)
+            html += String.format(
+                    "  <tr>\n" +
+                            "    <td>%s</td>\n" +
+                            "    <td>€%s</td>\n" +
+                            "  </tr>\n",i.getName(), i.getPrice());
 
-        billArea.append("\nTotal Price: €" + billTotal);
+        html += String.format(
+                " <tr style=\"border-top: thick double #ff0000;\">\n" +
+                        "  <td><b>Total Price</b></td>\n" +
+                        "  <td><b>€%.2f</b></td>\n" +
+                        " </tr>\n" +
+                        "</table></html>;", billTotal);
+
+        JTextPane billArea = new JTextPane();
+        billArea.setContentType("text/html");
+        billArea.setText(html);
         billArea.setEditable(false);
         return billArea;
     }
