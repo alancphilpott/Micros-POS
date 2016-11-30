@@ -11,6 +11,11 @@ public class Bill {
     private double billTotal;
     private ArrayList<Meal> mealList = new ArrayList<>();
 
+    public Bill ()
+    {
+
+    }
+
     public void setBill(Meal meal)
     {
         mealList.add(meal);

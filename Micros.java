@@ -176,34 +176,48 @@ public class Micros extends JFrame {
 
             String choice = a.getActionCommand();
 
+            if(choice.equals("View Bill"))
+            {
+                JOptionPane.showMessageDialog(null,allTables[tableNumber].getBillList(),"Table Number " + (tableNumber+1) + "'s Bill",JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            if(choice.equals("Pay Bill")) {
+                JOptionPane.showMessageDialog(null, "Your Bill Total Is: €" + allTables[tableNumber].getBillTotal(),"Pay Bill For Table Number: " + (tableNumber+1),JOptionPane.INFORMATION_MESSAGE);
+            }
+
             // --------------------------- Food Item Number One ---------------------------
             if (choice.equals(curry.toString())) {
                 allTables[tableNumber].setBill(curry);
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
-
             // --------------------------- Food Item Number Two ---------------------------
             if (choice.equals(spaghetti.toString())) {
-                allTables[tableNumber].setBill(curry);
+                allTables[tableNumber].setBill(spaghetti);
+                System.out.println(choice + " Added");
             }
 
             // --------------------------- Food Item Number Three ---------------------------
             if (choice.equals(steak.toString())) {
-                allTables[tableNumber].setBill(curry);
+                allTables[tableNumber].setBill(steak);
+                System.out.println(choice + " Added");
             }
 
             // --------------------------- Drink Item Number One ---------------------------
             if (choice.equals(tea.toString())) {
-                allTables[tableNumber].setBill(curry);
+                allTables[tableNumber].setBill(tea);
+                System.out.println(choice + " Added");
             }
 
             // --------------------------- Drink Item Number Two ---------------------------
             if (choice.equals(coffee.toString())) {
-                allTables[tableNumber].setBill(curry);
+                allTables[tableNumber].setBill(coffee);
+                System.out.println(choice + " Added");
             }
 
             // --------------------------- Drink Item Number Three ---------------------------
             if (choice.equals(hotChocolate.toString())) {
-                allTables[tableNumber].setBill(curry);
+                allTables[tableNumber].setBill(hotChocolate);
+                System.out.println(choice + " Added");
             }
         }
     }
