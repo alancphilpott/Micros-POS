@@ -181,8 +181,26 @@ public class Micros extends JFrame {
                 JOptionPane.showMessageDialog(null,allTables[tableNumber].getBillList(),"Table Number " + (tableNumber+1) + "'s Bill",JOptionPane.INFORMATION_MESSAGE);
             }
 
-            if(choice.equals("Pay Bill")) {
-                JOptionPane.showMessageDialog(null, "Your Bill Total Is: €" + allTables[tableNumber].getBillTotal(),"Pay Bill For Table Number: " + (tableNumber+1),JOptionPane.INFORMATION_MESSAGE);
+            if(choice.equals("Pay Bill"))
+            {
+                String amtAsString;
+                double amt;
+                double total = allTables[tableNumber].getBillTotal();
+                if (total != 0) {
+                    do {
+                        amtAsString = JOptionPane.showInputDialog(null, "Your Bill Total Is: €" + total + " Please Enter Amount You Want To Pay", "Pay Bill For Table Number: " + (tableNumber + 1), JOptionPane.INFORMATION_MESSAGE);
+                        amt = Double.parseDouble(amtAsString);
+                        total -= amt;
+                        if (total <= 0) {
+                            JOptionPane.showMessageDialog(null, "The Bill Has Been Paid. Your Change Is " + total);
+                            allTables[tableNumber] = new Bill();
+                        }
+                    } while (total > 0);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"There Is No Items On The Bill For Table Number: " + (tableNumber+1));
+                }
             }
 
             // --------------------------- Food Item Number One ---------------------------
@@ -193,31 +211,31 @@ public class Micros extends JFrame {
             // --------------------------- Food Item Number Two ---------------------------
             if (choice.equals(spaghetti.toString())) {
                 allTables[tableNumber].setBill(spaghetti);
-                System.out.println(choice + " Added");
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
 
             // --------------------------- Food Item Number Three ---------------------------
             if (choice.equals(steak.toString())) {
                 allTables[tableNumber].setBill(steak);
-                System.out.println(choice + " Added");
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
 
             // --------------------------- Drink Item Number One ---------------------------
             if (choice.equals(tea.toString())) {
                 allTables[tableNumber].setBill(tea);
-                System.out.println(choice + " Added");
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
 
             // --------------------------- Drink Item Number Two ---------------------------
             if (choice.equals(coffee.toString())) {
                 allTables[tableNumber].setBill(coffee);
-                System.out.println(choice + " Added");
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
 
             // --------------------------- Drink Item Number Three ---------------------------
             if (choice.equals(hotChocolate.toString())) {
                 allTables[tableNumber].setBill(hotChocolate);
-                System.out.println(choice + " Added");
+                System.out.println(choice + " Added To Table " + (tableNumber+1));
             }
         }
     }
