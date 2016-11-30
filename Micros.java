@@ -1,5 +1,3 @@
-import javafx.scene.control.ListCell;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,33 +8,23 @@ import java.awt.event.ActionListener;
 public class Micros extends JFrame {
     // Create Local Variables
 
-    // array of tables
+    private Bill userBill = new Bill();
 
-    // JItems
-    private JButton menuButton;  // Buttons For Adding Food
-    private JLabel areaLabel; // Label To Name Each Food Item
-    private JComboBox comboBox;
-    private JMenuBar menuBar; // To Create The Menu Bar
-    private JMenu fileMenu;
-    private JMenu billMenu; // Create The Menus For The Menu Bar
-    private JMenuItem menuItem; // Create The Items For The Menus
-    private JComboBox tableList;
-    private Container cPane; // Container For All J Items
+    // Create Global JItem Variables
+    private JComboBox<String> tableChooser;
 
+    //private Array[] of Bill tableNumber;
+    private Bill [] allTables = new Bill[10];
     // Micros Menu
+
     private Meal curry = new Meal("Chicken Curry", 10.00);
     private Meal spaghetti = new Meal("Spaghetti Bolognese", 15.00);
     private Meal steak = new Meal("Steak Sandwich", 20.00);
     private Meal tea = new Meal("Lyons Tea", 2.00);
     private Meal coffee = new Meal("Bewleys Coffee", 3.00);
-    private Meal hotchocolate = new Meal("Hot Chocolate", 4.00);
+    private Meal hotChocolate = new Meal("Hot Chocolate", 4.00);
 
-    private Table userTable = new Table();
-
-    private String[] tableNumbers;
-
-    // New Variable Of Type 'Bill'
-    private Bill userBill = new Bill();
+    // Constructor Method
 
     public Micros()
     {
@@ -48,14 +36,14 @@ public class Micros extends JFrame {
         setLocation(800, 250);
 
         // ---------------------------------- Create The Container ----------------------------------
-        cPane = getContentPane();
+        Container cPane = getContentPane();
         cPane.setBackground(Color.WHITE);
         cPane.setLayout(null);
 
         // ---------------------------------- Create The Welcome/Instruction Label ----------------------------------
         Color red = Color.decode("#ff0000");
 
-        areaLabel = new JLabel("Welcome!");
+        JLabel areaLabel = new JLabel("Welcome");
         areaLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
         areaLabel.setForeground(red);
         areaLabel.setLocation(65, 5);
@@ -78,18 +66,24 @@ public class Micros extends JFrame {
         cPane.add(areaLabel);
 
         // --------------------------------- Create ComboBox for Choosing the Table Number --------------------
-        tableList = new JComboBox();
-        for(int x = 1; x <= userTable.getNumOfTables(); x++)
+        // Creating Combo Box Labels
+        tableChooser = new JComboBox<>();
+        for(int x = 0; x < allTables.length; x++)
         {
-            tableList.addItem(String.valueOf(x));
+            tableChooser.addItem(String.valueOf(x+1));
+        }
+
+        for(int x = 0; x < allTables.length; x++)
+        {
+            allTables[x] = new Bill();
         }
 
         DefaultListCellRenderer centerText = new DefaultListCellRenderer();
         centerText.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-        tableList.setRenderer(centerText);
-        tableList.setLocation(10,105);
-        tableList.setSize(200,20);
-        cPane.add(tableList);
+        tableChooser.setRenderer(centerText);
+        tableChooser.setLocation(10,105);
+        tableChooser.setSize(200,20);
+        cPane.add(tableChooser);
 
         // ---------------------------------- Create The Food Label ----------------------------------
         areaLabel = new JLabel("Food Items");
@@ -100,7 +94,7 @@ public class Micros extends JFrame {
         cPane.add(areaLabel);
 
         // ---------------------------------- Create The Food Buttons ----------------------------------
-        menuButton = new JButton(curry.toString());
+        JButton menuButton = new JButton(curry.toString());
         menuButton.setLocation(10, 170);
         menuButton.setSize(200, 30);
         menuButton.addActionListener(new actionListener());
@@ -135,17 +129,18 @@ public class Micros extends JFrame {
         menuButton.setSize(200, 30);
         menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
-        menuButton = new JButton(hotchocolate.toString());
+        menuButton = new JButton(hotChocolate.toString());
         menuButton.setLocation(10, 420);
         menuButton.setSize(200, 30);
         menuButton.addActionListener(new actionListener());
         cPane.add(menuButton);
+        // -----------------------------------------------------------------------------------------------
 
         // Create The 'View' Menu To Hold Items
-        billMenu = new JMenu("Bill");
+        JMenu billMenu = new JMenu("Bill");
 
         // Create Items To Add To 'View' Menu
-        menuItem = new JMenuItem("View Bill"); // New Menu Item Called View
+        JMenuItem menuItem = new JMenuItem("View Bill");
         menuItem.addActionListener(new actionListener()); // Action Listener For When 'View Bill' Is Clicked
         billMenu.add(menuItem); // Add 'View Bill' To The Bill Menu
 
@@ -154,7 +149,7 @@ public class Micros extends JFrame {
         billMenu.add(menuItem);
 
         // Create The 'File' Menu To Hold Items
-        fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu("File");
 
         //Create Items To Add To 'File' Menu
         menuItem = new JMenuItem("Exit"); // New Menu Item Called Exit
@@ -162,7 +157,8 @@ public class Micros extends JFrame {
         fileMenu.add(menuItem); // Add 'Exit' To The File Menu
 
         // Create Menu Bar To Add Menus
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(Color.ORANGE);
         menuBar.add(billMenu);
         menuBar.add(fileMenu);
 
@@ -172,51 +168,42 @@ public class Micros extends JFrame {
 
     public class actionListener extends Bill implements ActionListener
     {
-        public void actionPerformed(ActionEvent a) {
-            // --------------------------- View Bill Option ---------------------------
-            if (a.getActionCommand().equals("View Bill")) {
-                JOptionPane.showMessageDialog(null, userBill.getBillList());
-            }
+        public void actionPerformed(ActionEvent a)
+        {
+            String tableChosen = tableChooser.getSelectedItem().toString();
+            int tableNumber = Integer.parseInt(tableChosen);
+            --tableNumber;
 
-            // --------------------------- Pay Bill Option ---------------------------
-            if (a.getActionCommand().equals("Pay Bill")) {
-                JOptionPane.showMessageDialog(null, "Your Bill Total Is: €" + userBill.getBillTotal());
-            }
+            String choice = a.getActionCommand();
 
             // --------------------------- Food Item Number One ---------------------------
-            if (a.getActionCommand().equals(curry.toString())) {
-                userBill.setBill(curry);
-                JOptionPane.showMessageDialog(null, curry.getName() + " Added To Bill");
+            if (choice.equals(curry.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
 
             // --------------------------- Food Item Number Two ---------------------------
-            if (a.getActionCommand().equals(spaghetti.toString())) {
-                userBill.setBill(spaghetti);
-                JOptionPane.showMessageDialog(null, spaghetti.getName() + " Added To Bill");
+            if (choice.equals(spaghetti.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
 
             // --------------------------- Food Item Number Three ---------------------------
-            if (a.getActionCommand().equals(steak.toString())) {
-                userBill.setBill(steak);
-                JOptionPane.showMessageDialog(null, steak.getName() + " Added To Bill");
+            if (choice.equals(steak.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
 
             // --------------------------- Drink Item Number One ---------------------------
-            if (a.getActionCommand().equals(tea.toString())) {
-                userBill.setBill(tea);
-                JOptionPane.showMessageDialog(null, tea.getName() + " Added To Bill");
+            if (choice.equals(tea.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
 
             // --------------------------- Drink Item Number Two ---------------------------
-            if (a.getActionCommand().equals(coffee.toString())) {
-                userBill.setBill(coffee);
-                JOptionPane.showMessageDialog(null, coffee.getName() + " Added To Bill");
+            if (choice.equals(coffee.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
 
             // --------------------------- Drink Item Number Three ---------------------------
-            if (a.getActionCommand().equals(hotchocolate.toString())) {
-                userBill.setBill(hotchocolate);
-                JOptionPane.showMessageDialog(null, hotchocolate.getName() + " Added To Bill");
+            if (choice.equals(hotChocolate.toString())) {
+                allTables[tableNumber].setBill(curry);
             }
         }
     }
