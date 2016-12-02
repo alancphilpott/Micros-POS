@@ -1,17 +1,19 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /** Created by Alan on 19/11/2016 */
 
 public class Micros extends JFrame {
     // Create Local Variables
 
-    private Bill userBill = new Bill();
+    private Bill allMealsSold = new Bill();
 
     // Create Global JItem Variables
     private JComboBox<String> tableChooser;
+    private JLabel totalSalesLabel;
+    private JLabel outAmtLabel;
+    JMenuItem mealItem;
 
     //private Array[] of Bill tableNumber;
     private Bill [] allTables = new Bill[10];
@@ -24,16 +26,18 @@ public class Micros extends JFrame {
     private Meal coffee = new Meal("Bewleys Coffee", 3.00);
     private Meal hotChocolate = new Meal("Hot Chocolate", 4.00);
 
-    // Constructor Method
+    private double outAmt;
 
+    // Constructor Method
     public Micros()
     {
         // Set The JFrame Properties ------------------------------------------------------------------
         super("MicrosSys");
-        setSize(230, 515);
+        setSize(230, 575);
         setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocation(800, 250);
+        setLocation(500, 100);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new windowListener());
 
         // ---------------------------------- Create The Container ----------------------------------
         Container cPane = getContentPane();
@@ -66,7 +70,7 @@ public class Micros extends JFrame {
         cPane.add(areaLabel);
 
         // --------------------------------- Create ComboBox for Choosing the Table Number --------------------
-        // Creating Combo Box Labels
+
         tableChooser = new JComboBox<>();
         for(int x = 0; x < allTables.length; x++)
         {
@@ -136,6 +140,7 @@ public class Micros extends JFrame {
         cPane.add(menuButton);
         // -----------------------------------------------------------------------------------------------
 
+        /* -------------------------------------------- Create The Menu Bar ------------------------------------------ */
         // Create The 'View' Menu To Hold Items
         JMenu billMenu = new JMenu("Bill");
 
@@ -147,6 +152,17 @@ public class Micros extends JFrame {
         menuItem = new JMenuItem("Pay Bill");
         menuItem.addActionListener(new actionListener());
         billMenu.add(menuItem);
+
+        // Create the 'Meal' menu to hold items
+        JMenu mealMenu = new JMenu("Meal");
+
+        mealItem = new JMenuItem("View All Meals Sold");
+        mealItem.addActionListener(new actionListener());
+        mealMenu.add(mealItem);
+
+        mealItem = new JMenuItem("Save File of All Meals Sold Today");
+        mealItem.addActionListener(new actionListener());
+        mealMenu.add(mealItem);
 
         // Create The 'File' Menu To Hold Items
         JMenu fileMenu = new JMenu("File");
@@ -160,10 +176,25 @@ public class Micros extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(Color.ORANGE);
         menuBar.add(billMenu);
+        menuBar.add(mealMenu);
         menuBar.add(fileMenu);
 
         // Add The Menu Bar To The Frame
         setJMenuBar(menuBar);
+
+        double totalBillSales = Bill.getTotalSales();
+
+        /* Add a reference to total sales on the home screen */
+        totalSalesLabel = new JLabel("Total Sales This Session: €" + totalBillSales);
+        totalSalesLabel.setLocation(22, 460);
+        totalSalesLabel.setSize(200, 30);
+        cPane.add(totalSalesLabel);
+
+        /* Add a reference to outstanding bills on the home screen */
+        outAmtLabel = new JLabel("Total Amount Outstanding: €" + totalBillSales);
+        outAmtLabel.setLocation(20, 480);
+        outAmtLabel.setSize(200, 30);
+        cPane.add(outAmtLabel);
     }
 
     public class actionListener extends Bill implements ActionListener
@@ -175,67 +206,123 @@ public class Micros extends JFrame {
             --tableNumber;
 
             String choice = a.getActionCommand();
+            double total = allTables[tableNumber].getBillTotal();
 
             if(choice.equals("View Bill"))
             {
-                JOptionPane.showMessageDialog(null,allTables[tableNumber].getBillList(),"Table Number " + (tableNumber+1) + "'s Bill",JOptionPane.INFORMATION_MESSAGE);
+                if (total == 0) {
+                    JOptionPane.showMessageDialog(null,"There Are No Items On The Bill For Table Number: " + (tableNumber+1));
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, allTables[tableNumber].getBillList(), "Table Number " + (tableNumber + 1) + "'s Bill", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
 
             if(choice.equals("Pay Bill"))
             {
                 String amtAsString;
                 double amt;
-                double total = allTables[tableNumber].getBillTotal();
                 if (total != 0) {
                     do {
                         amtAsString = JOptionPane.showInputDialog(null, "Your Bill Total Is: €" + total + " Please Enter Amount You Want To Pay", "Pay Bill For Table Number: " + (tableNumber + 1), JOptionPane.INFORMATION_MESSAGE);
                         amt = Double.parseDouble(amtAsString);
-                        total -= amt;
-                        if (total <= 0) {
-                            JOptionPane.showMessageDialog(null, "The Bill Has Been Paid. Your Change Is " + total);
+                        double totalRemaining = total;
+
+                        if (amt > total)
+                        {
+                            outAmt -= total;
+                            totalRemaining = 0;
+                            total -= amt;
+                        }
+                        else
+                        {
+                            outAmt -= amt;
+                            totalRemaining -= amt;
+                        }
+
+                        if (outAmt < 0)
+                        {
+                            outAmt = 0;
+                        }
+
+                        if (totalRemaining <= 0) {
+                            JOptionPane.showMessageDialog(null, "The Bill Has Been Paid. Your Change Is €" + Math.abs(total)); // If negative number, return's the number negated
                             allTables[tableNumber] = new Bill();
                         }
                     } while (total > 0);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null,"There Is No Items On The Bill For Table Number: " + (tableNumber+1));
+                    JOptionPane.showMessageDialog(null,"There Are No Items On The Bill For Table Number: " + (tableNumber+1));
                 }
             }
 
-            // --------------------------- Food Item Number One ---------------------------
-            if (choice.equals(curry.toString())) {
-                allTables[tableNumber].setBill(curry);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
-            }
-            // --------------------------- Food Item Number Two ---------------------------
-            if (choice.equals(spaghetti.toString())) {
-                allTables[tableNumber].setBill(spaghetti);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
+            if (choice.equals("View All Meals Sold"))
+            {
+                JOptionPane.showMessageDialog(null, allMealsSold.getAllMeals(), "Table Number " + (tableNumber + 1) + "'s Bill", JOptionPane.INFORMATION_MESSAGE);
             }
 
-            // --------------------------- Food Item Number Three ---------------------------
-            if (choice.equals(steak.toString())) {
-                allTables[tableNumber].setBill(steak);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
-            }
+            else {
+                // --------------------------- Food Item Number One ---------------------------
+                if (choice.equals(curry.toString())) {
+                    allTables[tableNumber].setBill(curry);
+                    allMealsSold.setAllMeals(curry);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
+                // --------------------------- Food Item Number Two ---------------------------
+                if (choice.equals(spaghetti.toString())) {
+                    allTables[tableNumber].setBill(spaghetti);
+                    allMealsSold.setAllMeals(spaghetti);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
 
-            // --------------------------- Drink Item Number One ---------------------------
-            if (choice.equals(tea.toString())) {
-                allTables[tableNumber].setBill(tea);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
-            }
+                // --------------------------- Food Item Number Three ---------------------------
+                if (choice.equals(steak.toString())) {
+                    allTables[tableNumber].setBill(steak);
+                    allMealsSold.setAllMeals(steak);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
 
-            // --------------------------- Drink Item Number Two ---------------------------
-            if (choice.equals(coffee.toString())) {
-                allTables[tableNumber].setBill(coffee);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
-            }
+                // --------------------------- Drink Item Number One ---------------------------
+                if (choice.equals(tea.toString())) {
+                    allTables[tableNumber].setBill(tea);
+                    allMealsSold.setAllMeals(tea);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
 
-            // --------------------------- Drink Item Number Three ---------------------------
-            if (choice.equals(hotChocolate.toString())) {
-                allTables[tableNumber].setBill(hotChocolate);
-                System.out.println(choice + " Added To Table " + (tableNumber+1));
+                // --------------------------- Drink Item Number Two ---------------------------
+                if (choice.equals(coffee.toString())) {
+                    allTables[tableNumber].setBill(coffee);
+                    allMealsSold.setAllMeals(coffee);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
+
+                // --------------------------- Drink Item Number Three ---------------------------
+                if (choice.equals(hotChocolate.toString())) {
+                    allTables[tableNumber].setBill(hotChocolate);
+                    allMealsSold.setAllMeals(hotChocolate);
+                    System.out.println(choice + " Added To Table " + (tableNumber + 1));
+                }
+                totalSalesLabel.setText("Total Sales This Session: €" + getTotalSales());
+                outAmtLabel.setText("Total Amount Outstanding: €" + getOutAmt());
+            }
+        }
+    }
+
+    public class windowListener extends WindowAdapter
+    {
+        public void windowClosing(WindowEvent e)
+        {
+            double amtOut = Bill.getOutAmt();
+
+            if(amtOut == 0)
+            {
+                JOptionPane.showMessageDialog(null,"Total Sales Today: €" + Bill.getTotalSales());
+                System.exit(0);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Not All Bills Have Been Paid. Amount Outstanding: €" + amtOut);
             }
         }
     }
