@@ -1,6 +1,11 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /** Created by Alan on 19/11/2016 */
 
@@ -13,7 +18,7 @@ public class Micros extends JFrame {
     private JComboBox<String> tableChooser;
     private JLabel totalSalesLabel;
     private JLabel outAmtLabel;
-    JMenuItem mealItem;
+    private JMenuItem mealItem;
 
     //private Array[] of Bill tableNumber;
     private Bill [] allTables = new Bill[10];
@@ -262,6 +267,11 @@ public class Micros extends JFrame {
                 JOptionPane.showMessageDialog(null, allMealsSold.getAllMeals(), "Table Number " + (tableNumber + 1) + "'s Bill", JOptionPane.INFORMATION_MESSAGE);
             }
 
+            if (choice.equals("Save File of All Meals Sold Today"))
+            {
+                saveAs();
+            }
+
             else {
                 // --------------------------- Food Item Number One ---------------------------
                 if (choice.equals(curry.toString())) {
@@ -323,6 +333,41 @@ public class Micros extends JFrame {
             else
             {
                 JOptionPane.showMessageDialog(null,"Not All Bills Have Been Paid. Amount Outstanding: €" + amtOut);
+            }
+        }
+    }
+
+    public void saveAs()
+    {
+        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Text File", "txt");
+        final JFileChooser saveAsFileChooser = new JFileChooser();
+        saveAsFileChooser.setApproveButtonText("Save");
+        saveAsFileChooser.setFileFilter(extensionFilter);
+        int actionDialog = saveAsFileChooser.showOpenDialog(this);
+        if (actionDialog != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        File file = saveAsFileChooser.getSelectedFile();
+        if (!file.getName().endsWith(".txt")) {
+            file = new File(file.getAbsolutePath() + ".txt");
+        }
+
+        BufferedWriter outFile = null;
+        try {
+            outFile = new BufferedWriter(new FileWriter(file));
+
+            allMealsSold.getAllMeals().write(outFile);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (outFile != null) {
+                try {
+                    outFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

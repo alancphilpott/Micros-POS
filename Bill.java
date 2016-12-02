@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Bill {
 
-    static double totalSales;
+    private static double totalSales;
     static double outAmt;
     private double billTotal;
     private ArrayList<Meal> mealList = new ArrayList<>();
@@ -75,7 +75,7 @@ public class Bill {
             billFormat = "";
         }
 
-        mealArea.append("\nTotal Price: €" + billTotal);
+        mealArea.append("\nTotal Price: €" + totalSales);
         mealArea.setEditable(false);
         return mealArea;
     }
