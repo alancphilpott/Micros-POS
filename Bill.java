@@ -13,9 +13,10 @@ public class Bill {
     private double billTotal; // Stores the total amount for each bill created.
     private ArrayList<Meal> mealList = new ArrayList<>(); // An ArrayList of type Meal to store all meals added to a Bill.
     private ArrayList<Meal> allMeals = new ArrayList<>(); // An ArrayList of type Meal to store all meals added to every Bill created.
+    static JTextArea mealArea;
 
     /**
-     * Default Constructor.
+     * Default Class Constructor.
      */
     public Bill () { }
 
@@ -97,7 +98,7 @@ public class Bill {
     public JTextArea getAllMeals ()
     {
         String billFormat = "";
-        JTextArea mealArea = new JTextArea();
+        mealArea = new JTextArea();
         mealArea.setFont(new Font("monospaced", Font.PLAIN, 14));
         mealArea.append(String.format("%-20s %-10s\n\n","Name","Price"));
 
