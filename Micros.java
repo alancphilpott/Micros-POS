@@ -167,9 +167,9 @@ public class Micros extends JFrame
         menuItem.addActionListener(new actionListener());
         fileMenu.add(menuItem);
 
-        menuItem = new JMenuItem("Load Previous Session");
-        menuItem.addActionListener(new actionListener());
-        fileMenu.add(menuItem);
+//        menuItem = new JMenuItem("Load Previous Session");
+//        menuItem.addActionListener(new actionListener());
+//        fileMenu.add(menuItem);
 
         menuItem = new JMenuItem("Exit"); // New Menu Item Called Exit
         menuItem.addActionListener(e -> System.exit(0)); // Action Listener For When 'Exit' Is Clicked
@@ -278,10 +278,10 @@ public class Micros extends JFrame
             {
                 saveAs();
             }
-            if (choice.equals("Load Previous Session"))
-            {
-                openFile();
-            }
+//            if (choice.equals("Load Previous Session"))
+//            {
+//                openFile();
+//            }
 
             else {
                 // --------------------------- Food Item Number One ---------------------------
@@ -381,22 +381,24 @@ public class Micros extends JFrame
         }
      }
 
-    public void openFile() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-        File file = chooser.getSelectedFile();
-        String fileName = file.getAbsolutePath();
-
-        try
-        {
-            FileReader reader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(reader);
-            Bill.mealArea.read(bufferedReader, null);
-            bufferedReader.close();
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
+//    public void openFile() {
+//        JFileChooser chooser = new JFileChooser();
+//        chooser.showOpenDialog(null);
+//        File file = chooser.getSelectedFile();
+//        String fileName = file.getAbsolutePath();
+//
+//        try
+//        {
+//            FileReader reader = new FileReader(fileName);
+//            BufferedReader bufferedReader = new BufferedReader(reader);
+//            JTextArea text = new JTextArea();
+//            text.read(bufferedReader, null);
+//            Bill.mealArea.setText(text.getText());
+//            bufferedReader.close();
+//        }
+//        catch(Exception e)
+//        {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
+//    }
 }
