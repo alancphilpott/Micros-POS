@@ -5,7 +5,9 @@ public class Meal {
     private String name;
     private double price;
 
-    public Meal () {}
+    public Meal () {
+        this("No Name",0.0);
+    }
 
     public Meal (String name, double price)
     {

@@ -1,5 +1,6 @@
-import javax.swing.*;
-import java.awt.*;
+
+import javax.swing.JTextArea;
+import java.awt.Font;
 import java.util.ArrayList;
 
 /** Date Created: 19/11/2016.

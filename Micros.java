@@ -2,10 +2,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /** Created by Alan on 19/11/2016 */
 
@@ -30,8 +27,6 @@ public class Micros extends JFrame {
     private Meal tea = new Meal("Lyons Tea", 2.00);
     private Meal coffee = new Meal("Bewleys Coffee", 3.00);
     private Meal hotChocolate = new Meal("Hot Chocolate", 4.00);
-
-    private double outAmt;
 
     // Constructor Method
     public Micros()
